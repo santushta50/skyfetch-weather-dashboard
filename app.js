@@ -1,6 +1,5 @@
-
 const API_KEY = "da5bcc0f2db9305a8b0d2df28955dc9b";
-const city = "London";
+const city = "Chennai";
 
 const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${API_KEY}&units=metric`;
 
