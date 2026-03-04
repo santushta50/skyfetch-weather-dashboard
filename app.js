@@ -1,24 +1,31 @@
 const API_KEY = "da5bcc0f2db9305a8b0d2df28955dc9b";
-const city = "Chennai";
 
-const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${API_KEY}&units=metric`;
+async function getWeather(cityName) {
+    try {
+        const response = await axios.get(
+            `https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=${API_KEY}&units=metric`
+        );
 
-axios.get(url)
-    .then(function(response) {
-        console.log(response.data);
-        displayWeather(response.data);
-    })
-    .catch(function(error) {
-        console.log("Error:", error);
-    });
+        const data = response.data;
 
-function displayWeather(data) {
-    document.getElementById("city").innerText = data.name;
-    document.getElementById("temperature").innerText = data.main.temp + " °C";
-    document.getElementById("description").innerText = data.weather[0].description;
+        document.getElementById("city").innerText = data.name;
+        document.getElementById("temperature").innerText = data.main.temp + " °C";
+        document.getElementById("description").innerText = data.weather[0].description;
 
-    const iconCode = data.weather[0].icon;
-    const iconUrl = `https://openweathermap.org/img/wn/${iconCode}@2x.png`;
+        const iconCode = data.weather[0].icon;
+        const iconUrl = `https://openweathermap.org/img/wn/${iconCode}@2x.png`;
 
-    document.getElementById("icon").src = iconUrl;
+        document.getElementById("icon").src = iconUrl;
+
+    } catch (error) {
+        alert("City not found!");
+    }
 }
+
+function searchWeather() {
+    const cityName = document.getElementById("cityInput").value;
+    getWeather(cityName);
+}
+
+// Default city on load
+getWeather("Chennai");
